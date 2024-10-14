@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        body {
+            background-image: url('./leaf.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        b {
+            font-size: 18px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+        <div class="row align-items-center g-lg-5 py-5">
+            <div class="col-lg-7 text-center text-lg-start">
+                <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">Registration Form</h1>
+                <p class="col-lg-10 fs-4">Fill in the form below to create an account. Ensure all fields are completed
+                    before submitting.</p>
+            </div>
+            <div class="col-md-10 mx-auto col-lg-5">
+                <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" onsubmit="return validateForm()">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="Username" placeholder="Username" required>
+                        <label for="Username">Username</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                        <label for="email">Email address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="tel" class="form-control" id="phone" placeholder="Phone Number" required>
+                        <label for="phone">Phone Number</label>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="form-floating flex-grow-1">
+                            <input type="password" class="form-control" id="password" placeholder="Password" required>
+                            <label for="password">Password</label>
+                        </div>
+                        <span class="input-group-text" onclick="togglePassword('password', 'togglePasswordIcon')">
+                            <i id="togglePasswordIcon" class="fas fa-eye"></i>
+                        </span>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="form-floating flex-grow-1">
+                            <input type="password" class="form-control" id="confirmPassword"
+                                placeholder="Confirm Password" required>
+                            <label for="confirmPassword">Confirm Password</label>
+                        </div>
+                        <span class="input-group-text"
+                            onclick="togglePassword('confirmPassword', 'toggleConfirmPasswordIcon')">
+                            <i id="toggleConfirmPasswordIcon" class="fas fa-eye"></i>
+                        </span>
+                    </div>
+
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" value="remember-me"> Remember me
+                        </label>
+                    </div>
+                    <button class="w-100 btn btn-lg btn-success" type="submit">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+        crossorigin="anonymous"></script>
+
+    <!-- Password Confirmation Script -->
+    <script>
+        function validateForm() {
+            const username = document.getElementById("Username").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+            if (!username || !email || !phone || !password || !confirmPassword) {
+                alert("All fields must be filled");
+                return false;
+
+            }
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match. Please try again.");
+                return false;
+            }
+
+            const phonePattern = /^\d{10}$/;
+            if (!phonePattern.test(phone)) {
+                alert("Phone Number must be exactly 10 digits");
+                return false;
+            }
+
+            const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[&$#@])[A-Za-z\d&$#@]{7,}$/;
+            if (!passwordPattern.test(password)) {
+                alert("Password must be at least 7 characters long and contain at least one uppercase letter, one digit, and one special character (&, $, #, @).");
+                return false;
+            }
+
+            function togglePassword(fieldId, iconId) {
+                const passwordField = document.getElementById(fieldId);
+                const toggleIcon = document.getElementById(iconId);
+                if (passwordField.type === "password") {
+                    passwordField.type = "text";
+                    toggleIcon.classList.remove("fa-eye");
+                    toggleIcon.classList.add("fa-eye-slash");
+                } else {
+                    passwordField.type = "password";
+                    toggleIcon.classList.remove("fa-eye-slash");
+                    toggleIcon.classList.add("fa-eye");
+                }
+            }
+
+            alert("Registration Successful!!")
+            return true;
+        }
+    </script>
+</body>
+
+</html>
